@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         TextView name =findViewById(R.id.name);
         TextView local_atual =findViewById(R.id.local_atual);
         ImageView perfil =findViewById(R.id.UserImage);
+        // To retrieve object in second Activity
+        getIntent().getSerializableExtra("user");
         PieChartView pieChartView = findViewById(R.id.chart);
         if(isConnected()){
             new AlertDialog.Builder(this)

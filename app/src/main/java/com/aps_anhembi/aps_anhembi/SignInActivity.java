@@ -108,8 +108,9 @@ public class SignInActivity extends AppCompatActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("EMAIL E SENHA", "signInWithEmail:success");
                             FirebaseUser userFB = auth.getCurrentUser();
-
-                            //updateUI(user);
+                            //To pass:
+                            //intent.putExtra("user", obj);
+                            //construir objeto user com as informações do firabase usar extra para poder passar
                             Intent i = new Intent(SignInActivity.this,MainActivity.class);
                             startActivity(i);
                         } else {
