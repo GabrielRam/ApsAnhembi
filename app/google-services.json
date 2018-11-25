@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "910769094357",
+    "firebase_url": "https://apsanhembi.firebaseio.com",
+    "project_id": "apsanhembi",
+    "storage_bucket": "apsanhembi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910769094357:android:fda038349544a5db",
+        "android_client_info": {
+          "package_name": "com.aps_anhembi.aps_anhembi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910769094357-jq02k3euu01chansd67mbg7375r0h209.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4ba2sxyNlzgOQ_TxJXsmyRYdSNgBoa0U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910769094357:android:8c1d1c211f802f03",
+        "android_client_info": {
+          "package_name": "com.apsanhembi.aps_anhembi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910769094357-jq02k3euu01chansd67mbg7375r0h209.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4ba2sxyNlzgOQ_TxJXsmyRYdSNgBoa0U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

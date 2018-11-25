@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_add_local"
+            android:orderInCategory="100"
+            android:title="Adicionar Local"   />
+        <item
+            android:id="@+id/action_lista_local"
+            android:orderInCategory="100"
+            android:title="Lista de locais"     />
+        <item
+            android:id="@+id/action_dia_ate_agr"
+            android:orderInCategory="100"
+            android:title="Meu dia ate o momento"    />
+        <item
+            android:id="@+id/action_relatorio"
+            android:orderInCategory="100"
+            android:title="Relatorio"    />
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="100"
+            android:title="@string/action_settings"     />
+        <item
+            android:id="@+id/action_log_out"
+            android:orderInCategory="100"
+            android:title="LOg Out"     />
+    </group>
+
+
+</menu>
