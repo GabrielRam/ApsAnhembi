@@ -4,6 +4,15 @@ public class user {
     private String Name;
     private String mail;
     private Settings settings;
+    private String Password;
+    public user(){
+
+    }
+    public user(String Name, String mail,String Password){
+        this.mail=mail;
+        this.Name=Name;
+        this.setPassword(Password);
+    }
 
 
     public String getName() {
@@ -28,5 +37,13 @@ public class user {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
     }
 }

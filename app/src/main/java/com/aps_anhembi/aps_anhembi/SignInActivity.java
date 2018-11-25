@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -106,8 +107,9 @@ public class SignInActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("EMAIL E SENHA", "signInWithEmail:success");
-                            FirebaseUser user = auth.getCurrentUser();
-                            updateUI(user);
+                            FirebaseUser userFB = auth.getCurrentUser();
+
+                            //updateUI(user);
                             Intent i = new Intent(SignInActivity.this,MainActivity.class);
                             startActivity(i);
                         } else {
