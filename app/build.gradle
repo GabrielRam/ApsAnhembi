@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.aps_anhembi.aps_anhembi"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -33,5 +33,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.2.4'
 }
 apply plugin: 'com.google.gms.google-services'

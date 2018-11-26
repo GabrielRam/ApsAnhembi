@@ -1,4 +1,4 @@
-package com.aps_anhembi.aps_anhembi;
+package com.aps_anhembi.aps_anhembi.Fragment;
 
         import android.app.PendingIntent;
         import android.content.Context;
@@ -7,10 +7,14 @@ package com.aps_anhembi.aps_anhembi;
         import android.location.Location;
         import android.location.LocationManager;
         import android.os.Bundle;
+        import android.support.annotation.NonNull;
+        import android.support.annotation.Nullable;
         import android.support.v4.app.ActivityCompat;
+        import android.support.v4.app.Fragment;
         import android.support.v4.content.ContextCompat;
-        import android.support.v7.app.AppCompatActivity;
+        import android.view.LayoutInflater;
         import android.view.View;
+        import android.view.ViewGroup;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.TextView;
@@ -22,12 +26,13 @@ package com.aps_anhembi.aps_anhembi;
         import com.android.volley.VolleyError;
         import com.android.volley.toolbox.StringRequest;
         import com.android.volley.toolbox.Volley;
+        import com.aps_anhembi.aps_anhembi.R;
 
         import java.util.HashMap;
         import java.util.Map;
 
 
-public class AddLocalActivity extends AppCompatActivity  {
+public class AddLocalActivity extends Fragment {
 
     public Location location; // location
     protected LocationManager locationManager;
@@ -40,7 +45,7 @@ public class AddLocalActivity extends AppCompatActivity  {
     double latitude; // latitude
     double longitude; // longitude
 
-    private final Context mContext = this;
+    private final Context mContext = getContext();
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -51,78 +56,80 @@ public class AddLocalActivity extends AppCompatActivity  {
 
     private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 1;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_local);
-        Button cadastrar=findViewById(R.id.cadastrarLocal);
-        tLongitude=findViewById(R.id.logitudeAdd);
-        tLatitude=findViewById(R.id.latitudeAdd);
-        titulo=findViewById(R.id.tituloAdd);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.activity_add_local, null);
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button cadastrar = view.findViewById(R.id.cadastrarLocal);
+        tLongitude = view.findViewById(R.id.logitudeAdd);
+        tLatitude = view.findViewById(R.id.latitudeAdd);
+        titulo = view.findViewById(R.id.tituloAdd);
         tLongitude.setVisibility(View.VISIBLE);
         tLatitude.setVisibility(View.VISIBLE);
-        Location location = getLocation();
-        if(location !=null){
-        tLatitude.setText(Double.toString(location.getLatitude()));
-        tLongitude.setText(Double.toString(location.getLongitude()));
-        cadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //esse código deve ser executado dentro do evento de click do botão cadastrar
-                final String url = "WebService/rest/local/cadastrar"; //URL String do web service para cadastro de locais
+        if (location != null) {
+            tLatitude.setText(Double.toString(location.getLatitude()));
+            tLongitude.setText(Double.toString(location.getLongitude()));
+            cadastrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //esse código deve ser executado dentro do evento de click do botão cadastrar
+                    final String url = "WebService/rest/local/cadastrar"; //URL String do web service para cadastro de locais
 
-                RequestQueue queue = Volley.newRequestQueue(AddLocalActivity.this);
+                    RequestQueue queue = Volley.newRequestQueue(getContext());
 
-                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(AddLocalActivity.this,"Enviado",Toast.LENGTH_SHORT).show();
+                    StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Toast.makeText(getActivity(), "Enviado", Toast.LENGTH_SHORT).show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    //tratamento de erros
+                                }
                             }
-                        },
-                        new Response.ErrorListener()
-                        {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                //tratamento de erros
-                            }
+                    ) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params = construir();
+
+                            return params;
                         }
-                ) {
-                    @Override
-                    protected Map<String, String> getParams()
-                    {
-                        Map<String, String>  params = new HashMap<String, String>();
-                        params=construir();
-
-                        return params;
-                    }
-                };
-                queue.add(postRequest);
-            }
-        });
+                    };
+                    queue.add(postRequest);
+                }
+            });
         }
     }
 
-    public Location getLocation() {
 
-        Intent locationIntent = new Intent(getApplicationContext(), AddLocalActivity.class);
+    public Location getLocation(){
+        Intent locationIntent = new Intent(getContext(), AddLocalActivity.class);
         PendingIntent locationPendingIntent = PendingIntent.getService(
-                getApplicationContext(),
+                getContext(),
                 0,
                 locationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
 
         //Verifica se tem permissão de localização, caso não tenha pede que usuário conceda a permissão
-        if (ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+        if (ContextCompat.checkSelfPermission( getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
 
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION},
+            ActivityCompat.requestPermissions( getActivity(), new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     MY_PERMISSION_ACCESS_COURSE_LOCATION );
         }
 
         try {
-            locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+            locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
             // getting GPS status
             isGPSEnabled = locationManager
@@ -181,5 +188,6 @@ public class AddLocalActivity extends AppCompatActivity  {
         //params.put("id_usuario", ); //pegar id usuario do firebase
         return params;
     }
+   
 
 }
