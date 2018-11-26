@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aps_anhembi.aps_anhembi.Model.Usuario;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -32,7 +33,7 @@ public class SignInActivity extends AppCompatActivity implements
     private EditText Email;
     private EditText Password;
     private Button button;
-
+    private Usuario usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +76,10 @@ public class SignInActivity extends AppCompatActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            updateUI(user);
+                            usuario.setName(user.getDisplayName().toString());
+                            //updateUI(user);
                             Intent i = new Intent(SignInActivity.this,MainActivity.class);
+                            i.putExtra("Usuario",usuario);
                             startActivity(i);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -108,10 +111,9 @@ public class SignInActivity extends AppCompatActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("EMAIL E SENHA", "signInWithEmail:success");
                             FirebaseUser userFB = auth.getCurrentUser();
-                            //To pass:
-                            //intent.putExtra("user", obj);
-                            //construir objeto user com as informações do firabase usar extra para poder passar
                             Intent i = new Intent(SignInActivity.this,MainActivity.class);
+                            usuario.setName(userFB.getDisplayName().toString());
+                            i.putExtra("Usuario",usuario);
                             startActivity(i);
                         } else {
                             // If sign in fails, display a message to the user.

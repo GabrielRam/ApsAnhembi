@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aps_anhembi.aps_anhembi.Model.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView name =findViewById(R.id.name);
-        TextView local_atual =findViewById(R.id.local_atual);
         ImageView perfil =findViewById(R.id.UserImage);
         // To retrieve object in second Activity
-        getIntent().getSerializableExtra("user");
+        Usuario padrao = (Usuario) getIntent().getSerializableExtra("Usuario");
+        name.setText(padrao.getName());
         PieChartView pieChartView = findViewById(R.id.chart);
         if(isConnected()){
             new AlertDialog.Builder(this)

@@ -10,6 +10,11 @@ package com.aps_anhembi.aps_anhembi;
         import android.support.v4.app.ActivityCompat;
         import android.support.v4.content.ContextCompat;
         import android.support.v7.app.AppCompatActivity;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
         import com.android.volley.Request;
         import com.android.volley.RequestQueue;
@@ -28,7 +33,10 @@ public class AddLocalActivity extends AppCompatActivity  {
     protected LocationManager locationManager;
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
-
+    TextView tLongitude;
+    Button cadastrar;
+    TextView tLatitude;
+    EditText titulo;
     double latitude; // latitude
     double longitude; // longitude
 
@@ -46,44 +54,54 @@ public class AddLocalActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //esse código deve ser executado dentro do evento de click do botão cadastrar
-        final String url = "WebService/rest/local/cadastrar"; //URL String do web service para cadastro de locais
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        //tratamento da response
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //tratamento de erros
-                    }
-                }
-        ) {
+        setContentView(R.layout.activity_add_local);
+        Button cadastrar=findViewById(R.id.cadastrarLocal);
+        tLongitude=findViewById(R.id.logitudeAdd);
+        tLatitude=findViewById(R.id.latitudeAdd);
+        titulo=findViewById(R.id.tituloAdd);
+        tLongitude.setVisibility(View.VISIBLE);
+        tLatitude.setVisibility(View.VISIBLE);
+        Location location = getLocation();
+        if(location !=null){
+        tLatitude.setText(Double.toString(location.getLatitude()));
+        tLongitude.setText(Double.toString(location.getLongitude()));
+        cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
+            public void onClick(View v) {
+                //esse código deve ser executado dentro do evento de click do botão cadastrar
+                final String url = "WebService/rest/local/cadastrar"; //URL String do web service para cadastro de locais
 
-                //Adiciona os parametros para POST de criação de local
-                params.put("titulo", "Alif"); //txt do titulo
-                params.put("latitude", "http://itsalif.info"); //txt latitude
-                params.put("longitude", "Alif"); //txt longitude
-                params.put("id_usuario", "Alif"); //pegar id usuario do firebase
+                RequestQueue queue = Volley.newRequestQueue(AddLocalActivity.this);
 
-                return params;
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(AddLocalActivity.this,"Enviado",Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                //tratamento de erros
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams()
+                    {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params=construir();
+
+                        return params;
+                    }
+                };
+                queue.add(postRequest);
             }
-        };
-        queue.add(postRequest);
+        });
+        }
     }
 
     public Location getLocation() {
@@ -152,4 +170,16 @@ public class AddLocalActivity extends AppCompatActivity  {
         }
         return location;
     }
+
+    public Map<String, String> construir(){
+        Map<String, String>  params = new HashMap<String, String>();
+
+        //Adiciona os parametros para POST de criação de local
+        params.put("titulo", titulo.toString() ); //txt do titulo
+        params.put("latitude", tLatitude.toString()); //txt latitude
+        params.put("longitude", tLongitude.toString()); //txt longitude
+        //params.put("id_usuario", ); //pegar id usuario do firebase
+        return params;
+    }
+
 }
